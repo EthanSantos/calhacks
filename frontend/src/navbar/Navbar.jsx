@@ -13,7 +13,7 @@ const Navbar = () => {
           >
             build
           </Link>
-          <Link to="/user-home" className="w-[60px]">
+          <Link to="/" className="w-[60px]">
             <img src={'./src/pics/icon.png'} alt="Icon"/>
           </Link>
           <Link to="/" class="nav" className="font-satoshi text-blue text-3xl hover:text-red">
