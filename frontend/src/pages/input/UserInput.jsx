@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { getCompletion } from '../../helper/geminiAiService';
 
 const UserInput = () => {
 
@@ -16,7 +17,7 @@ const UserInput = () => {
     const [yearsOfExp, setYearsOfExp] = useState(0);
     const [payment, setPayment] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         setPage(page + 1)
@@ -30,8 +31,16 @@ const UserInput = () => {
         console.log('Years of Experience:', yearsOfExp);
         console.log('Payment:', payment);
         // we will send this to the chatgpt api here
-        // upload to database as well
+        // upload to database aswell
+
+        try {
+            const completion = await getCompletion("This is a test. What is 5 + 5?"); // put prompt here
+            console.log(completion)
+          } catch (error) {
+            console.error('Error fetching completion:', error);
+          }
     };
+
 
     return (
         <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-10 p-6 bg-white shadow-md rounded-md">
