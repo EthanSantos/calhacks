@@ -5,14 +5,14 @@ import Navbar from '../../navbar/Navbar.jsx';
 const Home = () => {
   return (
     <>
-      <div id="section1" className="flex flex-col justify-center items-center h-screen">
+      <div id="section1" className="flex flex-col justify-center items-center h-screen mt-[-20px]">
         <MyComponent />
         <Navbar />
         <img src={'./src/pics/logo.png'} alt="Logo" className="h-64 mb-[-15px]" />
         
         <div className="typewriter-container">
           <p className="font-satoshi text-[25px] text-center text-yellow typewriter">
-            Your go-to platform for <span className="italic">generating</span> and <span className="italic">interpreting</span> contracts.
+            Focus on business, <span className="italic">we'll handle the law!</span> 
           </p>
         </div>
 

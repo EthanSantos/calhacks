@@ -81,7 +81,7 @@ const UserInput = () => {
                         {page === 0 && (
                             <div>
                                 <h1 className="flex text-5xl font-bold mb-4 text-blue text-shadow-custom justify-center align-center">Let's get to know you!</h1>
-                                <h1 className="flex justify-center align-center text-3xl mb-4 text-blue">Part A Bio</h1>                                
+                                <h1 className="flex justify-center align-center text-3xl mb-4 text-blue">Bio</h1>                                
                                 <div className="mb-4">
                                     <label htmlFor="name" className="block text-white font-bold mb-2">Name</label>
                                     <input
@@ -119,7 +119,7 @@ const UserInput = () => {
                         {page === 1 && (
                             <div>
                             <h1 className="flex text-5xl font-bold mb-4 text-blue text-shadow-custom justify-center align-center">Let's get to know you!</h1>
-                            <h1 className="flex justify-center align-center text-3xl mb-4 text-blue">Part B: Timeline</h1>
+                            <h1 className="flex justify-center align-center text-3xl mb-4 text-blue">Timeline</h1>
                                 <div className="mb-4">
                                     <label htmlFor="startDate" className="block text-white font-bold mb-4">Start Date</label>
                                     <input
@@ -147,7 +147,9 @@ const UserInput = () => {
                         {page === 2 && (
                             <div>
                                 <h1 className="flex text-5xl font-bold mb-4 text-blue text-shadow-custom justify-center align-center">Let's get to know you!</h1>
-                                <h1 className="flex justify-center align-center text-3xl mb-4 text-blue">Part C: Experience and Payment</h1>
+                                <h1 className="flex justify-center align-center text-3xl mb-4 text-blue">Pay rate</h1>
+                                <p className="flex justify-center align-center text-blue">Format: $/hour</p>
+
                                 <div className="mb-4">
                                     <label htmlFor="payment" className="block text-white font-bold mb-4">Pay rate</label>
                                     <input

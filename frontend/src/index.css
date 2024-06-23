@@ -140,6 +140,14 @@ html {
     height: 100vh; /* Example: Full height of viewport */
 }
 
+.loading-container2 {
+    display: grid;
+    align-items: center; /* Center both horizontally and vertically */
+    justify-content: center;
+    height: auto; /* Example: Full height of viewport */
+    margin-top:20%;
+}
+
 .loading-text {
     margin-top: 20px;
     font-size: 2rem;
