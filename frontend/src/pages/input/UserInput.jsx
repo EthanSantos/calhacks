@@ -128,7 +128,7 @@ const UserInput = () => {
                             <h1 className="flex text-5xl font-bold mb-4 text-blue text-shadow-custom justify-center align-center">Let's get to know you!</h1>
                             <h1 className="flex justify-center align-center text-3xl mb-4 text-blue">Part A: Bio</h1>
                             <div className="mb-4">
-                                <label htmlFor="name" className="block text-white font-bold mb-2">Name:</label>
+                                <label htmlFor="name" className="block text-white font-bold mb-2">Name</label>
                                 <input
                                     type="text"
                                     id="name"
@@ -139,7 +139,7 @@ const UserInput = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="profession" className="block text-white font-bold mb-2">Profession:</label>
+                                <label htmlFor="profession" className="block text-white font-bold mb-2">Profession</label>
                                 <input
                                     type="text"
                                     id="profession"
@@ -150,7 +150,7 @@ const UserInput = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="services" className="block text-white font-bold mb-2">Services:</label>
+                                <label htmlFor="services" className="block text-white font-bold mb-2">Services</label>
                                 <textarea
                                     id="services"
                                     value={services}
@@ -166,7 +166,7 @@ const UserInput = () => {
                             <h1 className="flex text-5xl font-bold mb-4 text-blue text-shadow-custom justify-center align-center">Let's get to know you!</h1>
                             <h1 className="flex justify-center align-center text-3xl mb-4 text-blue">Part B: Timeline</h1>
                             <div className="mb-4">
-                                <label htmlFor="startDate" className="block text-white font-bold mb-4">Start Date:</label>
+                                <label htmlFor="startDate" className="block text-white font-bold mb-4">Start Date</label>
                                 <input
                                     type="date"
                                     id="startDate"
@@ -177,7 +177,7 @@ const UserInput = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="endDate" className="block text-white font-bold mb-4">End Date:</label>
+                                <label htmlFor="endDate" className="block text-white font-bold mb-4">End Date</label>
                                 <input
                                     type="date"
                                     id="endDate"
@@ -188,7 +188,7 @@ const UserInput = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="checkIns" className="block text-white font-bold mb-4">Check-Ins:</label>
+                                <label htmlFor="checkIns" className="block text-white font-bold mb-4">Check-Ins</label>
                                 <input
                                     type="text"
                                     id="checkIns"
@@ -205,7 +205,7 @@ const UserInput = () => {
                             <h1 className="flex text-5xl font-bold mb-4 text-blue text-shadow-custom justify-center align-center">Let's get to know you!</h1>
                             <h1 className="flex justify-center align-center text-3xl mb-4 text-blue">Part C: Experience and Payment</h1>
                             <div className="mb-4">
-                                <label htmlFor="yearsOfExp" className="block text-white font-bold mb-4">Years of Experience:</label>
+                                <label htmlFor="yearsOfExp" className="block text-white font-bold mb-4">Years of Experience</label>
                                 <input
                                     type="number"
                                     id="yearsOfExp"
@@ -216,7 +216,7 @@ const UserInput = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="payment" className="block text-white font-bold mb-4">Payment:</label>
+                                <label htmlFor="payment" className="block text-white font-bold mb-4">Payment</label>
                                 <input
                                     type="text"
                                     id="payment"
@@ -229,14 +229,23 @@ const UserInput = () => {
                         </div>
                     )}
                     {page < 2 && (
-                        <button onClick={handleNext} className="gradient-hover py-5 rounded-md">
-                            Next
-                        </button>
+                        <div className="relative group">
+                            <div className="absolute -inset-0.5 bg-gradient-to-r from-red to-blue rounded-lg blur opacity-75"></div>
+                            <button onClick={handleNext} className="relative w-full bg-black text-2xl text-white font-bold py-4 rounded-md
+                            group-hover:bg-blue group-hover:text-black transition-colors duration-300 ease-in-out">
+                                Next
+                            </button>
+                        </div>
+                        
                     )}
                     {page === 2 && (
-                        <button type="submit" className="gradient-hover bg-black text-white font-bold py-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <div className="relative group">
+                            <div className="absolute -inset-0.5 bg-gradient-to-r from-red to-blue rounded-lg blur opacity-75"></div>
+                            <button type="submit" className="relative w-full bg-black text-white text-2xl font-bold py-4 rounded-md
+                            group-hover:bg-blue group-hover:text-black transition-colors duration-300 ease-in-out">
                             Submit
                         </button>
+                        </div>
                     )}
                 </form>
                 
