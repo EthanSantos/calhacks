@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState} from 'react';
 import { getCompletion } from '../../helper/geminiAiService';
 import UrComponent from './UrComponent.jsx';
 import Contract from '../contract/Contract';
@@ -49,6 +49,7 @@ const UserInput = () => {
     
             setContractData(contractSections);
             setLoading(false);
+
         } catch (error) {
             console.error('Error generating contract sections:', error);
             setContractData([]); // Clear contract data on error
@@ -63,16 +64,19 @@ const UserInput = () => {
 
     return (
         <>
-        <div className="flex flex-row justify-center items-center h-screen">
-            <UrComponent />
-            <div className="relative flex justify-left items-center">
-                <img src={'./src/pics/anim1.png'} alt="Anim1" className="anim1 h-[650px] w-auto ml-[150px]"/>
-                <img src={'./src/pics/anim2.png'} alt="Anim2" className="anim2 h-[450px] w-auto"/>
-            </div>
-
-            {loading && <p>Loading...</p>}
+        {loading && <Loading/>}
+        <div className="flex flex-row justify-center items-center">
+        {!loading && contractData.length === 0 && (
+            <>
+                <UrComponent />
+                <div className="relative flex justify-left items-center">
+                    <img src={'./src/pics/anim1.png'} alt="Anim1" className="anim1 h-[650px] w-auto ml-[150px]"/>
+                    <img src={'./src/pics/anim2.png'} alt="Anim2" className="anim2 h-[450px] w-auto"/>
+                </div>
+            </>
+        )}
             {!loading && contractData.length === 0 && (
-            <div className='flex justify-center align-center h-full w-full ml-[250px] p-[150px] bg-gray rounded-[30px]'>
+            <div className='flex justify-center align-center h-full w-full ml-[250px] p-[150px] bg-gray rounded-[30px] h-screen'>
                 <form onSubmit={page === 2 ? handleSubmit : handleNext}>
                         {page === 0 && (
                             <div>
@@ -177,11 +181,15 @@ const UserInput = () => {
                         )}
                     </form>
                 </div>
+                // </div>
             )}
+            {/* {!loading && contractData.length > 0 && (
+                <Contract headers={sections} contractData={contractData} />
+            )} */}
+            </div>
             {!loading && contractData.length > 0 && (
                 <Contract headers={sections} contractData={contractData} />
             )}
-            </div>
         </>
     );
 };

@@ -130,9 +130,18 @@ const Contract = ({ headers, contractData }) => {
           </div>
         ))}
         
-        <button onClick={generatePdf} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+        {/* <button onClick={generatePdf} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
           Generate PDF
-        </button>
+        </button> */}
+
+          <div className="relative group mt-10">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-red to-blue rounded-lg blur opacity-75"></div>
+              <button onClick={generatePdf} className="relative w-full bg-black text-white text-2xl font-bold py-4 rounded-md
+              group-hover:bg-blue group-hover:text-black transition-colors duration-300 ease-in-out">
+                  Generate PDF
+              </button>
+          </div>
+
       </div>
     </div>
   );
