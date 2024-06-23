@@ -12,7 +12,8 @@ const Home = () => {
         
         <div className="typewriter-container">
           <p className="font-satoshi text-[25px] text-center text-yellow typewriter">
-            Your go-to platform for <span className="italic">generating</span> and <span className="italic">interpreting</span> contracts.
+            Focus on business, we'll handle the law!
+             {/* <span className="italic">generating</span> and <span className="italic">interpreting</span> contracts. */}
           </p>
         </div>
 
@@ -37,14 +38,14 @@ const Home = () => {
             <div id="section2d" className="flex flex-col justify-center items-center p-10">
               <img src={'./src/pics/step1.png'} className="p-5"/>
               <p className="font-satoshi" style={{fontSize: '20px', fontWeight: 'regular'}}>File Upload</p>
-              <p className="font-satoshi" style={{fontSize: '25px', fontWeight: 'bold'}}>Transcribe with GPT</p>
+              <p className="font-satoshi" style={{fontSize: '25px', fontWeight: 'bold'}}>Transcribe with You.com</p>
             </div>
             
             <img src={''} className="p-5"/>
 
             <div id="section2d" className="flex flex-col justify-center items-center p-10">
               <img src={'./src/pics/step2.png'} className="p-5"/>
-              <p className="font-satoshi" style={{fontSize: '20px', fontWeight: 'regular'}}>Hume AI Conversations</p>
+              <p className="font-satoshi" style={{fontSize: '20px', fontWeight: 'regular'}}>You.com Analysis</p>
               <p className="font-satoshi" style={{fontSize: '25px', fontWeight: 'bold'}}>Understanding your contract</p>
             </div>
           </div>
@@ -58,15 +59,15 @@ const Home = () => {
             <div id="section2f" className="flex flex-col justify-center items-center p-10">
               <img src={'./src/pics/step1a.png'} className="p-5"/>
               <p className="font-satoshi" style={{color:'#E7D9BE', fontSize: '20px', fontWeight: 'regular'}}>File Upload</p>
-              <p className="font-satoshi" style={{color:'#E7D9BE', fontSize: '25px', fontWeight: 'bold'}}>Transcribe with GPT</p>
+              <p className="font-satoshi" style={{color:'#E7D9BE', fontSize: '25px', fontWeight: 'bold'}}>Upload your contract</p>
             </div>
 
             <img src={'./src/pics/arrow.png'} className="p-5"/>
             
             <div id="section2f" className="flex flex-col justify-center items-center p-10">
               <img src={'./src/pics/step2a.png'} className="p-5"/>
-              <p className="font-satoshi" style={{color:'#E7D9BE', fontSize: '20px', fontWeight: 'regular'}}>Hume AI Conversations</p>
-              <p className="font-satoshi" style={{color:'#E7D9BE', fontSize: '25px', fontWeight: 'bold'}}>Understanding your contract</p>
+              <p className="font-satoshi" style={{color:'#E7D9BE', fontSize: '20px', fontWeight: 'regular'}}>Gemini Generator</p>
+              <p className="font-satoshi" style={{color:'#E7D9BE', fontSize: '25px', fontWeight: 'bold'}}>Generate your contract</p>
             </div>
           </div>
 
