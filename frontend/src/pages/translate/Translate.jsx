@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import pdfToText from 'react-pdftotext'; // Assuming this is the correct library
+import TransComp from './TransComp.jsx'; // Adjust the path if MyComponent is in a different directory
+import Navbar from '../../navbar/Navbar.jsx';
 
 const Translate = () => {
   const [file, setFile] = useState(null);
@@ -41,7 +43,8 @@ const Translate = () => {
   }
 
   return (
-    <div style={{ width: '100%', height: '800px' }}>
+    <div className="w-full h-[800px]">
+      <TransComp/>
       <input type="file" accept="application/pdf" onChange={handleFileChange} />
       <button onClick={extractText}>Submit</button>
       {/* {contract && (
