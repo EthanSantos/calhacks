@@ -1,56 +1,41 @@
 import { useState } from 'react';
 import { getCompletion } from '../../helper/geminiAiService';
+import Contract from '../contract/Contract';
 import UrComponent from './UrComponent.jsx';
 import Loading from '../Loading.jsx';
 
 const UserInput = () => {
-
     const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [content, setContent] = useState([]);
+    const [contractData, setContractData] = useState([]);
 
-    // personal
-    const [name, setName] = useState(''); // Rian Corcino
-    const [profession, setProfession] = useState(''); // Instagram influencer
-    const [services, setServices] = useState(''); // Instagram reels
+    const sections = [
+        "Introduction",
+        "Scope of Work",
+        "Payment Terms",
+        "Deliverables",
+        "Timeline",
+        "Intellectual Property",
+        "Termination"
+    ];
 
-    const [startDate, setStartDate] = useState(''); // 6/12
+    const [name, setName] = useState('');
+    const [profession, setProfession] = useState(''); 
+    const [services, setServices] = useState(''); 
+    const [startDate, setStartDate] = useState(''); 
     const [endDate, setEndDate] = useState('');
-    const [checkIns, setCheckIns] = useState('');
-
-    const [yearsOfExp, setYearsOfExp] = useState(0);
     const [payment, setPayment] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setPage(page + 1);
-
-        console.log('Name:', name);
-        console.log('Profession:', profession);
-        console.log('Services:', services);
-        console.log('Start Date:', startDate);
-        console.log('End Date:', endDate);
-        console.log('Check-Ins:', checkIns);
-        console.log('Years of Experience:', yearsOfExp);
-        console.log('Payment:', payment);
-        // we will send this to the chatgpt api here
-        // upload to database aswell
-        const sections = [
-            "Introduction",
-            "Scope of Work",
-            "Payment Terms",
-            "Deliverables",
-            "Timeline",
-            "Intellectual Property",
-            "Termination"
-        ];
-        sections.forEach(async (sections) => {
-            console.log(sections)
-            let completion
-            try {
-                completion = await getCompletion(`
-                    Generate the "${sections}" section of the contract. Return a string response. Use these parameters:
+    
+        const contractSections = [];
+    
+        try {
+            for (const section of sections) {
+                const completion = await getCompletion(`
+                    Generate the "${section}" section of the contract. Return a string response. Use these parameters:
                     Name: ${name}
                     Profession: ${profession}
                     Services: ${services}
@@ -59,47 +44,17 @@ const UserInput = () => {
                     Payment: ${payment}
                 `);
                 
-            } catch (error) {
-                console.error(`Error generating "${sections}" section:`, error);
-            } finally {
-                setContent(prevContent => [...prevContent, completion, ]);
-                setLoading(false)
+                contractSections.push(completion);
             }
-        });
-        // let completion
-
-        // try {
-        //     const c1 = await getCompletion(`
-        //         Create a contract for a user who is offering their services to a client. Return a string response. Use these parameters:
-        //         Name: ${name}
-        //         Profession: ${profession}
-        //         Services: ${services}
-        //         Start Date: ${startDate}
-        //         End Date: ${endDate}
-        //         Payment: ${payment}
-        //     `)
-        // }
-
-        // try {
-        //     // Replace the actual user input with mock data for testing purposes
-        //     completion = await getCompletion(`
-        //         Create a contract for a user who is offering their services to a client. Return a string response. Use these parameters:
-        //         Name: ${name}
-        //         Profession: ${profession}
-        //         Services: ${services}
-        //         Start Date: ${startDate}
-        //         End Date: ${endDate}
-        //         Payment: ${payment}
-        //         `); // specify token count here
-            
-        //     console.log(completion);
-        // } catch (error) {
-        //     console.error('Error fetching completion:', error);
-        // } finally {
-        //     setContent(completion);
-        //     setLoading(false);
-        // }
-    };
+    
+            setContractData(contractSections);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error generating contract sections:', error);
+            setContractData([]); // Clear contract data on error
+            setLoading(false);
+        }
+    };    
 
     const handleNext = (e) => {
         e.preventDefault();
@@ -107,6 +62,108 @@ const UserInput = () => {
     };
 
     return (
+        <>
+            {loading && <p>Loading...</p>}
+            {!loading && contractData.length === 0 && (
+                <div className="max-w-lg mx-auto mt-10 p-6 bg-white shadow-md rounded-md">
+                    <form onSubmit={page === 2 ? handleSubmit : handleNext}>
+                        {page === 0 && (
+                            <div>
+                                <h1 className="text-2xl font-bold mb-4">Personal</h1>
+                                <div className="mb-4">
+                                    <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Name:</label>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        required
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="profession" className="block text-gray-700 font-bold mb-2">Profession:</label>
+                                    <input
+                                        type="text"
+                                        id="profession"
+                                        value={profession}
+                                        onChange={(e) => setProfession(e.target.value)}
+                                        required
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="services" className="block text-gray-700 font-bold mb-2">Services:</label>
+                                    <textarea
+                                        id="services"
+                                        value={services}
+                                        onChange={(e) => setServices(e.target.value)}
+                                        required
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                            </div>
+                        )}
+                        {page === 1 && (
+                            <div>
+                                <h1 className="text-2xl font-bold mb-4">Timeline</h1>
+                                <div className="mb-4">
+                                    <label htmlFor="startDate" className="block text-gray-700 font-bold mb-2">Start Date:</label>
+                                    <input
+                                        type="date"
+                                        id="startDate"
+                                        value={startDate}
+                                        onChange={(e) => setStartDate(e.target.value)}
+                                        required
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="endDate" className="block text-gray-700 font-bold mb-2">End Date:</label>
+                                    <input
+                                        type="date"
+                                        id="endDate"
+                                        value={endDate}
+                                        onChange={(e) => setEndDate(e.target.value)}
+                                        required
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                            </div>
+                        )}
+                        {page === 2 && (
+                            <div>
+                                <h1 className="text-2xl font-bold mb-4">Payment</h1>
+                                <div className="mb-4">
+                                    <label htmlFor="payment" className="block text-gray-700 font-bold mb-2">Payment:</label>
+                                    <input
+                                        type="text"
+                                        id="payment"
+                                        value={payment}
+                                        onChange={(e) => setPayment(e.target.value)}
+                                        required
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                            </div>
+                        )}
+                        {page < 2 && (
+                            <button onClick={handleNext} className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                Next
+                            </button>
+                        )}
+                        {page === 2 && (
+                            <button type="submit" className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                Submit
+                            </button>
+                        )}
+                    </form>
+                </div>
+            )}
+            {!loading && contractData.length > 0 && (
+                <Contract headers={sections} contractData={contractData} />
+            )}
+        </>
         <div className="flex flex-row justify-center items-center h-screen">
             <UrComponent />
             <div className="relative flex justify-left items-center">
