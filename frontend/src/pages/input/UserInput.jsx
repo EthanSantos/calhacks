@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { getCompletion } from '../../helper/geminiAiService';
 import UrComponent from './UrComponent.jsx';
-
+import Loading from '../Loading.jsx';
 
 const UserInput = () => {
 
@@ -115,7 +115,9 @@ const UserInput = () => {
             </div>
             <div className='flex justify-center align-center h-full w-full ml-[250px] p-[150px] bg-gray rounded-[30px]'>
                 <form onSubmit={page === 2 ? handleSubmit : handleNext} className='flex flex-col justify-center align-center max-w-auto'>
-                {loading && <p>Loading...</p>}
+                {/* {loading && <p>Loading...</p>} */}
+                {loading && <Loading />}
+
                 {!loading && content && 
                 
                 Array.isArray(content) && content.map((para, index) => (
