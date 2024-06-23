@@ -12,6 +12,9 @@ const Navbar = () => {
           <Link to="/user-input" className="text-white text-xl hover:text-gray-400">
             Input
           </Link>
+          <Link to="/translate" className="text-white text-xl hover:text-gray-400">
+            Translate
+          </Link>
         </div>
       </div>
     </nav>
