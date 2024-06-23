@@ -12,7 +12,9 @@ export default {
         red: '#E53A38',
         gray: '#322C26',
         white: '#EFE8DB',
-        black: '#272019'
+        black: '#272019',
+        darkblue: '#1B3335',
+        brown: '#574E42'
       },
       keyframes: {
         underline: {

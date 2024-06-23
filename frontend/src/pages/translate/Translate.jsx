@@ -41,24 +41,39 @@ const Translate = () => {
         .then(response => console.log(response))
         .catch(err => console.error(err));
   }
+  
 
   return (
-    <div className="w-full h-[800px]">
+    <div id="section1" className="flex flex-col justify-center items-center h-screen mt-[260px] mb-6">
       <TransComp/>
-      <input type="file" accept="application/pdf" onChange={handleFileChange} />
-      <button onClick={extractText}>Submit</button>
-      {/* {contract && (
-        <div>
-          <h2>Extracted Text:</h2>
-          <pre>{contract}</pre>
+      <Navbar/>
+      <div className="w-full h-[800px] justify-center align-center text-center">
+        <p className="font-satoshi font-medium text-[50px] text-transparent bg-clip-text bg-gradient-to-r from-blue to-darkblue mt-[-60px]">Let's translate your contract</p>
+        <div className="flex flex-col w-[60%] h-[50%] bg-brown mx-auto p-6 mt-8 relative border-4 border-white border-solid rounded-[50px] ">
+          <label htmlFor="fileUpload" className="absolute inset-0 flex flex-col justify-center items-center cursor-pointer">
+            <img src={'./src/pics/upload.png'} alt="Upload" className="mx-auto mt-11 mb-[-20px] transition-transform duration-300 transform hover:scale-110" />
+          </label>
+          <input id="fileUpload" type="file" accept="application/pdf" onChange={handleFileChange} className="hidden"/>
+          <button className="flex items-center mx-auto my-2 text-[30px] text-white" onClick={extractText}>
+            <span className="font-bold">Choose a file </span>
+            <span className="mx-1">or click</span>
+            <span className="underline">here</span>
+          </button>
+          {/* {contract && (
+            <div>
+              <h2>Extracted Text:</h2>
+              <pre>{contract}</pre>
+            </div>
+          )} */}
+          {isSubmitted && (
+            <object data={URL.createObjectURL(file)} type="application/pdf" width="100%" height="600px">
+              <p>Alternative text - include a link <a href={URL.createObjectURL(file)}>to the PDF!</a></p>
+            </object>
+          )}
         </div>
-      )} */}
-      {isSubmitted && (
-        <object data={URL.createObjectURL(file)} type="application/pdf" width="100%" height="600px">
-          <p>Alternative text - include a link <a href={URL.createObjectURL(file)}>to the PDF!</a></p>
-        </object>
-      )}
+      </div>
     </div>
+    
   );
 };
 
