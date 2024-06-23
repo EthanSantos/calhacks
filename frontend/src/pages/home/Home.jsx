@@ -10,10 +10,12 @@ const Home = () => {
         <Navbar />
         <img src={'./src/pics/logo.png'} alt="Logo" className="h-64 mb-[-15px]" />
         
-        <p className="font-satoshi text-[25px] text-center text-yellow typewriter">
-          Your go-to platform for <span className="italic">generating</span> and <span className="italic">interpreting</span> contracts.
-        </p>
-        
+        <div className="typewriter-container">
+          <p className="font-satoshi text-[25px] text-center text-yellow typewriter">
+            Your go-to platform for <span className="italic">generating</span> and <span className="italic">interpreting</span> contracts.
+          </p>
+        </div>
+
       <img src={'./src/pics/homeTri.png'} alt="Bottom" className="h-[65%] absolute bottom-0 right-0" />
 
         <a
