@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import pdfToText from 'react-pdftotext'; // Assuming this is the correct library
+import TransComp from './TransComp.jsx'; // Adjust the path if MyComponent is in a different directory
+import Navbar from '../../navbar/Navbar.jsx';
 
 const Translate = () => {
   const [file, setFile] = useState(null);
@@ -28,40 +31,64 @@ const Translate = () => {
     }
     setIsLoading(false);
   };
+  const extractText = () => {
+    setIsSubmitted(true)
+    if (file) {
+      pdfToText(file)
+        .then(text => {
+          console.log(text);
+          setContract(text);
+        })
+        .catch(error => console.error("Failed to extract text from pdf", error));
+    }
+  };
+
+  const searchYou = async () => {
+    const options = {
+        method: 'POST',
+        headers: {
+            'X-API-Key': '65c95fb3-7f81-4a01-9419-b6f150340e56<__>1PTsFeETU8N2v5f4qmtDZVGS',
+            'Content-Type': 'application/json'
+        },
+        body: '{"query":"What does UCLA stand for?","chat_id":"3c90c3cc-0d44-4b50-8888-8dd25736052a"}'
+      };
+      
+      fetch('https://chat-api.you.com/smart', options)
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
+  }
+  
 
   return (
-    <div className="w-full h-screen p-5 bg-gray-100">
-      <div className="max-w-md mx-auto">
-        <input type="file" accept="application/pdf" onChange={handleFileChange} className="block w-full text-sm text-gray-700 border rounded-lg cursor-pointer focus:outline-none" />
-        <button onClick={parsePDF} className="mt-4 px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-          Submit
-        </button>
+    <div id="section1" className="flex flex-col justify-center items-center h-screen mt-[260px] mb-6">
+      <TransComp/>
+      <Navbar/>
+      <div className="w-full h-[800px] justify-center align-center text-center">
+        <p className="font-satoshi font-medium text-[50px] text-transparent bg-clip-text bg-gradient-to-r from-blue to-darkblue mt-[-60px]">Let's translate your contract</p>
+        <div className="flex flex-col w-[60%] h-[50%] bg-brown mx-auto p-6 mt-8 relative border-4 border-white border-solid rounded-[50px] ">
+          <label htmlFor="fileUpload" className="absolute inset-0 flex flex-col justify-center items-center cursor-pointer">
+            <img src={'./src/pics/upload.png'} alt="Upload" className="mx-auto mt-11 mb-[-20px] transition-transform duration-300 transform hover:scale-110" />
+          </label>
+          <input id="fileUpload" type="file" accept="application/pdf" onChange={handleFileChange} className="hidden"/>
+          <button className="flex items-center mx-auto my-2 text-[30px] text-white" onClick={extractText}>
+            <span className="font-bold">Choose a file </span>
+            <span className="mx-1">or click</span>
+            <span className="underline">here</span>
+          </button>
+          {/* {contract && (
+            <div>
+              <h2>Extracted Text:</h2>
+              <pre>{contract}</pre>
+            </div>
+          )} */}
+          {isSubmitted && (
+            <object data={URL.createObjectURL(file)} type="application/pdf" width="100%" height="600px">
+              <p>Alternative text - include a link <a href={URL.createObjectURL(file)}>to the PDF!</a></p>
+            </object>
+          )}
+        </div>
       </div>
-      {isLoading ? (
-        <p className="text-center">Parsing your PDF and fetching sources...</p>
-      ) : (
-        contractDetails && Object.entries(contractDetails).map(([section, details]) => (
-          <div key={section} className="mt-4 p-5 bg-white rounded-lg shadow grid grid-cols-2 gap-4">
-            <div className="p-4 bg-gray-50 rounded-lg shadow">
-              <h2 className="text-xl font-bold">{section}</h2>
-              <p>{details.content}</p>
-            </div>
-            <div className="p-4 bg-gray-100 rounded-lg shadow">
-              {details.analysis && (
-                <>
-                  <h3 className="text-lg font-semibold">Analysis</h3>
-                  <p>{details.analysis.answer}</p>
-                  {details.analysis.search_results && details.analysis.search_results.slice(0, 3).map((result, index) => (
-                    <div key={index}>
-                      <a href={result.url} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-500 hover:underline">{result.url}</a>
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
-          </div>
-        ))
-      )}
     </div>
   );
 };

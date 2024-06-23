@@ -3,18 +3,19 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <nav className="bg-gray-800 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="flex space-x-4">
-          <Link to="/" className="text-white text-xl hover:text-gray-400">
-            Home
+    <nav className="bg-yellow bg-opacity-25 mt-[-200px] mb-[120px] p-4 w-[500px] h-[80px] flex justify-center items-center rounded-[200px] mx-auto shadow-lg">
+      <div className="container mx-auto flex items-center">
+        <div className="flex space-x-[85px] mx-auto">
+          <Link to="/user-input" className="navbar relative font-satoshi text-blue text-3xl hover:text-red">
+            build
           </Link>
-          <Link to="/user-input" className="text-white text-xl hover:text-gray-400">
-            Input
+          <Link to="/" className="relative w-[60px]">
+            <img src={'./src/pics/icon.png'} alt="Icon"/>
           </Link>
-          <Link to="/translate" className="text-white text-xl hover:text-gray-400">
-            Translate
+          <Link to="/translate" className="navbar relative font-satoshi text-blue text-3xl hover:text-red">
+            translate
           </Link>
+          
         </div>
       </div>
     </nav>
