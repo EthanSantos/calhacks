@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { jsPDF } from 'jspdf';
+import ConComp from './ConComp.jsx'; 
+import Navbar from '../../navbar/Navbar.jsx';
 
 const Contract = ({ headers, contractData }) => {
   const [parsedContractData, setParsedContractData] = useState([]);
@@ -97,51 +99,56 @@ const Contract = ({ headers, contractData }) => {
   }
 
   return (
-    <div className="bg-gray-100 p-6">
-      <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
-        <h1 className="text-2xl font-bold mb-4">Contract Details</h1>
+    <div id="section1" className="justify-center items-center h-screen overflow-y-auto">
+      {/* <Navbar/> */}
+      <ConComp />
+      <div className="flex flex-col mt-[260px]">
+        <Navbar/>
+        <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6 mt-[-60px] mb-8">
+          <h1 className="text-2xl font-bold mb-4">Contract Details</h1>
 
-        {parsedContractData.map((section, index) => (
-          <div key={index} className="mb-6">
-            {Object.keys(section).map((key, subIndex) => (
-              <div key={subIndex} className="mb-4">
-                <h2 className="text-xl font-semibold mb-2">{key}</h2>
-                {typeof section[key] === 'string' ? (
-                  <p className="bg-gray-200 p-2 rounded whitespace-pre-wrap">{section[key]}</p>
-                ) : Array.isArray(section[key]) ? (
-                  <ul className="bg-gray-200 p-2 rounded list-disc list-inside">
-                    {section[key].map((item, itemIndex) => (
-                      <li key={itemIndex}>
-                        {Object.entries(item).map(([itemKey, itemValue]) => (
-                          <p key={itemKey}><strong>{itemKey}:</strong> {itemValue}</p>
-                        ))}
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <div className="bg-gray-200 p-2 rounded">
-                    {Object.entries(section[key]).map(([itemKey, itemValue]) => (
-                      <p key={itemKey}><strong>{itemKey}:</strong> {itemValue}</p>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        ))}
-        
-        {/* <button onClick={generatePdf} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
-          Generate PDF
-        </button> */}
+          {parsedContractData.map((section, index) => (
+            <div key={index} className="mb-6">
+              {Object.keys(section).map((key, subIndex) => (
+                <div key={subIndex} className="mb-4">
+                  <h2 className="text-xl font-semibold mb-2">{key}</h2>
+                  {typeof section[key] === 'string' ? (
+                    <p className="bg-gray-200 p-2 rounded whitespace-pre-wrap">{section[key]}</p>
+                  ) : Array.isArray(section[key]) ? (
+                    <ul className="bg-gray-200 p-2 rounded list-disc list-inside">
+                      {section[key].map((item, itemIndex) => (
+                        <li key={itemIndex}>
+                          {Object.entries(item).map(([itemKey, itemValue]) => (
+                            <p key={itemKey}><strong>{itemKey}:</strong> {itemValue}</p>
+                          ))}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <div className="bg-gray-200 p-2 rounded">
+                      {Object.entries(section[key]).map(([itemKey, itemValue]) => (
+                        <p key={itemKey}><strong>{itemKey}:</strong> {itemValue}</p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ))}
+          
+          {/* <button onClick={generatePdf} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+            Generate PDF
+          </button> */}
 
-          <div className="relative group mt-10">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-red to-blue rounded-lg blur opacity-75"></div>
-              <button onClick={generatePdf} className="relative w-full bg-black text-white text-2xl font-bold py-4 rounded-md
-              group-hover:bg-blue group-hover:text-black transition-colors duration-300 ease-in-out">
-                  Generate PDF
-              </button>
-          </div>
+            <div className="relative group mt-10">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-red to-blue rounded-lg blur opacity-75"></div>
+                <button onClick={generatePdf} className="relative w-full bg-black text-white text-2xl font-bold py-4 rounded-md
+                group-hover:bg-blue group-hover:text-black transition-colors duration-300 ease-in-out">
+                    Generate PDF
+                </button>
+            </div>
 
+        </div>
       </div>
     </div>
   );
