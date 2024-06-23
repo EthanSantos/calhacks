@@ -8,14 +8,13 @@ const Home = () => {
       <div id="section1" className="flex flex-col justify-center items-center h-screen">
         <MyComponent />
         <Navbar />
-      <img src={'./src/pics/logo.png'} alt="Logo" className="h-64 mb-[-15px]" />
-        <p className="font-satoshi text-[25px] text-center text-yellow">
+        <img src={'./src/pics/logo.png'} alt="Logo" className="h-64 mb-[-15px]" />
+        
+        <p className="font-satoshi text-[25px] text-center text-yellow typewriter">
           Your go-to platform for <span className="italic">generating</span> and <span className="italic">interpreting</span> contracts.
         </p>
-        <img src={'./src/pics/homeTri.png'} alt="Bottom" className="h-[65%] absolute bottom-0 right-0" />
-        {/* <a href="#section2" className="font-satoshi text-lg absolute bottom-6 cursor-pointer hover:text-yellow transition-all">
-          Learn more
-        </a> */}
+        
+      <img src={'./src/pics/homeTri.png'} alt="Bottom" className="h-[65%] absolute bottom-0 right-0" />
 
         <a
           href="#section2"
@@ -30,10 +29,6 @@ const Home = () => {
         <div id="section2b" className="flex flex-col justify-center items-center h-[600px] w-[80%] max-w-[1200px] bg-[#E7D9BE] rounded-xl">
           <p className="font-satoshi" style={{ color: '#272019', fontSize: '60px', fontWeight: 'bold'}}>
             <span className="red-underline">TRANSLATE</span> your Contracts
-          </p>
-
-          <p style={{color: '#272019', fontSize:'20px'}}>
-            Understanding your own contract better
           </p>
 
           <div id="section2c" className="flex justify-center items-center">
@@ -57,10 +52,6 @@ const Home = () => {
           1 Step to <span className="blue-underline">BUILD</span> your contract
         </p>
 
-        <p style={{color: '#E7D9BE', fontSize:'20px', paddingTop:'10px'}}>
-          Create your own personalized contract using industry standards and economics
-        </p>
-
         <div id="section2e" className="flex justify-center items-center">
             <div id="section2f" className="flex flex-col justify-center items-center p-10">
               <img src={'./src/pics/step1a.png'} className="p-5"/>
@@ -77,7 +68,7 @@ const Home = () => {
             </div>
           </div>
 
-          <p className="font-satoshi pt-10" style={{color:'#E7D9BE', fontSize: '20px', fontWeight: 'regular'}}> © 2024 LegAIease. All Rights Reserved. </p>
+          <p className="font-satoshi pt-10" style={{color:'#E7D9BE', fontSize: '15px', fontWeight: 'regular'}}> © 2024 LegalEase. All Rights Reserved. </p>
       </div>
     </>
   )
