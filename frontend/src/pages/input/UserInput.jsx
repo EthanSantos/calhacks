@@ -7,35 +7,31 @@ const UserInput = () => {
     const [loading, setLoading] = useState(false);
     const [contractData, setContractData] = useState([]);
 
+    const sections = [
+        "Introduction",
+        "Scope of Work",
+        "Payment Terms",
+        "Deliverables",
+        "Timeline",
+        "Intellectual Property",
+        "Termination"
+    ];
+
     const [name, setName] = useState('');
     const [profession, setProfession] = useState(''); 
     const [services, setServices] = useState(''); 
-
     const [startDate, setStartDate] = useState(''); 
     const [endDate, setEndDate] = useState('');
-    const [checkIns, setCheckIns] = useState('');
-
-    const [yearsOfExp, setYearsOfExp] = useState(0);
     const [payment, setPayment] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-
-        const sections = [
-            "Introduction",
-            "Scope of Work",
-            "Payment Terms",
-            "Deliverables",
-            "Timeline",
-            "Intellectual Property",
-            "Termination"
-        ];
-
+    
         const contractSections = [];
-        
-        for (const section of sections) {
-            try {
+    
+        try {
+            for (const section of sections) {
                 const completion = await getCompletion(`
                     Generate the "${section}" section of the contract. Return a string response. Use these parameters:
                     Name: ${name}
@@ -45,15 +41,18 @@ const UserInput = () => {
                     End Date: ${endDate}
                     Payment: ${payment}
                 `);
+                
                 contractSections.push(completion);
-            } catch (error) {
-                console.error(`Error generating "${section}" section:`, error);
             }
+    
+            setContractData(contractSections);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error generating contract sections:', error);
+            setContractData([]); // Clear contract data on error
+            setLoading(false);
         }
-
-        setContractData(contractSections);
-        setLoading(false);
-    };
+    };    
 
     const handleNext = (e) => {
         e.preventDefault();
@@ -128,33 +127,11 @@ const UserInput = () => {
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
-                                <div className="mb-4">
-                                    <label htmlFor="checkIns" className="block text-gray-700 font-bold mb-2">Check-Ins:</label>
-                                    <input
-                                        type="text"
-                                        id="checkIns"
-                                        value={checkIns}
-                                        onChange={(e) => setCheckIns(e.target.value)}
-                                        required
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                </div>
                             </div>
                         )}
                         {page === 2 && (
                             <div>
-                                <h1 className="text-2xl font-bold mb-4">Experience and Payment</h1>
-                                <div className="mb-4">
-                                    <label htmlFor="yearsOfExp" className="block text-gray-700 font-bold mb-2">Years of Experience:</label>
-                                    <input
-                                        type="number"
-                                        id="yearsOfExp"
-                                        value={yearsOfExp}
-                                        onChange={(e) => setYearsOfExp(e.target.value)}
-                                        required
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                </div>
+                                <h1 className="text-2xl font-bold mb-4">Payment</h1>
                                 <div className="mb-4">
                                     <label htmlFor="payment" className="block text-gray-700 font-bold mb-2">Payment:</label>
                                     <input
@@ -182,7 +159,7 @@ const UserInput = () => {
                 </div>
             )}
             {!loading && contractData.length > 0 && (
-                <Contract contractData={contractData} />
+                <Contract headers={sections} contractData={contractData} />
             )}
         </>
     );
