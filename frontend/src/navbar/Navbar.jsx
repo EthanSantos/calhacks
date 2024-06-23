@@ -12,8 +12,8 @@ const Navbar = () => {
           <Link to="/" className="relative w-[60px]">
             <img src={'./src/pics/icon.png'} alt="Icon"/>
           </Link>
-          <Link to="/translate" className="text-white text-xl hover:text-gray-400">
-            Translate
+          <Link to="/" className="navbar relative font-satoshi text-blue text-3xl hover:text-red">
+            translate
           </Link>
         </div>
       </div>

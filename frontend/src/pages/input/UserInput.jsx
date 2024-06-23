@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { getCompletion } from '../../helper/geminiAiService';
+import UrComponent from './UrComponent.jsx';
 import Contract from '../contract/Contract';
 import Loading from '../loading/Loading';
 
@@ -62,14 +63,23 @@ const UserInput = () => {
 
     return (
         <>
+        <div className="flex flex-row justify-center items-center h-screen">
+            <UrComponent/>
+            <div className="relative flex justify-left items-center">
+                <img src={'./src/pics/anim1.png'} alt="Anim1" className="anim1 h-[650px] w-auto ml-[150px]"/>
+                <img src={'./src/pics/anim2.png'} alt="Anim2" className="anim2 h-[450px] w-auto"/>
+            </div>
+
             {loading && <Loading />}
             {/* {loading && <p>Loading...</p>} */}
+
             {!loading && contractData.length === 0 && (
-                <div className="max-w-lg mx-auto mt-10 p-6 bg-white shadow-md rounded-md">
+                <div className='flex justify-center align-center h-full w-full ml-[250px] p-[150px] bg-gray rounded-[30px]'>
                     <form onSubmit={page === 2 ? handleSubmit : handleNext}>
                         {page === 0 && (
                             <div>
-                                <h1 className="text-2xl font-bold mb-4">Personal</h1>
+                                <h1 className="flex text-5xl font-bold mb-4 text-blue text-shadow-custom justify-center align-center">Let's get to know you!</h1>
+                            <h1 className="flex justify-center align-center text-3xl mb-4 text-blue">Part A Bio</h1>
                                 <div className="mb-4">
                                     <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Name:</label>
                                     <input
@@ -78,7 +88,7 @@ const UserInput = () => {
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                         required
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
                                 <div className="mb-4">
@@ -148,14 +158,23 @@ const UserInput = () => {
                             </div>
                         )}
                         {page < 2 && (
-                            <button onClick={handleNext} className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                Next
-                            </button>
+                            <div className="relative group">
+                                <div className="absolute -inset-0.5 bg-gradient-to-r from-red to-blue rounded-lg blur opacity-75"></div>
+                                <button onClick={handleNext} className="relative w-full bg-black text-2xl text-white font-bold py-4 rounded-md
+                                group-hover:bg-blue group-hover:text-black transition-colors duration-300 ease-in-out">
+                                    Next
+                                </button>
+                            </div>
+                            
                         )}
                         {page === 2 && (
-                            <button type="submit" className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <div className="relative group">
+                                <div className="absolute -inset-0.5 bg-gradient-to-r from-red to-blue rounded-lg blur opacity-75"></div>
+                                <button type="submit" className="relative w-full bg-black text-white text-2xl font-bold py-4 rounded-md
+                                group-hover:bg-blue group-hover:text-black transition-colors duration-300 ease-in-out">
                                 Submit
                             </button>
+                            </div>
                         )}
                     </form>
                 </div>
@@ -163,6 +182,7 @@ const UserInput = () => {
             {!loading && contractData.length > 0 && (
                 <Contract headers={sections} contractData={contractData} />
             )}
+            </div>
         </>
     );
 };
