@@ -5,7 +5,7 @@ const UserInput = () => {
 
     const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState([]);
 
     // personal
     const [name, setName] = useState(''); // Rian Corcino
@@ -34,16 +34,69 @@ const UserInput = () => {
         console.log('Payment:', payment);
         // we will send this to the chatgpt api here
         // upload to database aswell
+        const sections = [
+            "Introduction",
+            "Scope of Work",
+            "Payment Terms",
+            "Deliverables",
+            "Timeline",
+            "Intellectual Property",
+            "Termination"
+        ];
+        sections.forEach(async (sections) => {
+            console.log(sections)
+            let completion
+            try {
+                completion = await getCompletion(`
+                    Generate the "${sections}" section of the contract. Return a string response. Use these parameters:
+                    Name: ${name}
+                    Profession: ${profession}
+                    Services: ${services}
+                    Start Date: ${startDate}
+                    End Date: ${endDate}
+                    Payment: ${payment}
+                `);
+                
+            } catch (error) {
+                console.error(`Error generating "${sections}" section:`, error);
+            } finally {
+                setContent(prevContent => [...prevContent, completion, ]);
+                setLoading(false)
+            }
+        });
+        // let completion
 
-        try {
-            const completion = await getCompletion("Create a contract for a user who is offering their services to someone else. Use these parameters: "); // put prompt here
-            setContent(completion);
-            console.log(completion);
-        } catch (error) {
-            console.error('Error fetching completion:', error);
-        } finally {
-            setLoading(false);
-        }
+        // try {
+        //     const c1 = await getCompletion(`
+        //         Create a contract for a user who is offering their services to a client. Return a string response. Use these parameters:
+        //         Name: ${name}
+        //         Profession: ${profession}
+        //         Services: ${services}
+        //         Start Date: ${startDate}
+        //         End Date: ${endDate}
+        //         Payment: ${payment}
+        //     `)
+        // }
+
+        // try {
+        //     // Replace the actual user input with mock data for testing purposes
+        //     completion = await getCompletion(`
+        //         Create a contract for a user who is offering their services to a client. Return a string response. Use these parameters:
+        //         Name: ${name}
+        //         Profession: ${profession}
+        //         Services: ${services}
+        //         Start Date: ${startDate}
+        //         End Date: ${endDate}
+        //         Payment: ${payment}
+        //         `); // specify token count here
+            
+        //     console.log(completion);
+        // } catch (error) {
+        //     console.error('Error fetching completion:', error);
+        // } finally {
+        //     setContent(completion);
+        //     setLoading(false);
+        // }
     };
 
     const handleNext = (e) => {
@@ -55,8 +108,13 @@ const UserInput = () => {
         <div className='max-w-lg mx-auto mt-10 p-6 bg-white shadow-md rounded-md'>
             <form onSubmit={page === 2 ? handleSubmit : handleNext}>
             {loading && <p>Loading...</p>}
-            {!loading && content && <div>{content}</div>}
-
+            {!loading && content && 
+            
+            Array.isArray(content) && content.map((para, index) => (
+                <div key={index} >
+                    <p key={index}>{para}</p><br/>
+                </div>
+            ))}
                 {page === 0 && (
                     <div>
                         <h1 className="text-2xl font-bold mb-4">Personal</h1>
