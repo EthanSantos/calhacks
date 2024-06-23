@@ -110,8 +110,8 @@ const UserInput = () => {
         <div className="flex flex-row justify-center items-center h-screen">
             <UrComponent />
             <div className="relative flex justify-left items-center">
-                <img src={'./src/pics/anim1.png'} alt="Anim1" className="h-[650px] w-auto ml-[150px]"/>
-                <img src={'./src/pics/anim2.png'} alt="Anim2" className="h-[450px] w-auto"/>
+                <img src={'./src/pics/anim1.png'} alt="Anim1" className="anim1 h-[650px] w-auto ml-[150px]"/>
+                <img src={'./src/pics/anim2.png'} alt="Anim2" className="anim2 h-[450px] w-auto"/>
             </div>
             <div className='flex justify-center align-center h-full w-full ml-[250px] p-[150px] bg-gray rounded-[30px]'>
                 <form onSubmit={page === 2 ? handleSubmit : handleNext} className='flex flex-col justify-center align-center max-w-auto'>
