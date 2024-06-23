@@ -12,7 +12,7 @@ const Navbar = () => {
           <Link to="/" className="relative w-[60px]">
             <img src={'./src/pics/icon.png'} alt="Icon"/>
           </Link>
-          <Link to="/" className="navbar relative font-satoshi text-blue text-3xl hover:text-red">
+          <Link to="/translate" className="navbar relative font-satoshi text-blue text-3xl hover:text-red">
             translate
           </Link>
           

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { getCompletion } from '../../helper/geminiAiService';
 import UrComponent from './UrComponent.jsx';
-
 import Contract from '../contract/Contract';
+import Loading from '../loading/Loading.jsx';
 
 const UserInput = () => {
     const [page, setPage] = useState(0);
