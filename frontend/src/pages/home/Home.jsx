@@ -1,5 +1,5 @@
 import React from 'react';
-import MyComponent from './MyComponent'; // Adjust the path if MyComponent is in a different directory
+import MyComponent from './MyComponent.jsx'; // Adjust the path if MyComponent is in a different directory
 
 const Home = () => {
   return (

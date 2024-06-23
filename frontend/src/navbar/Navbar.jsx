@@ -8,6 +8,7 @@ const Navbar = () => {
         <div className="flex space-x-[85px] mx-auto">
           <Link 
             to="/user-input" 
+            class="nav"
             className="relative font-satoshi text-blue text-3xl hover:text-red"
             style={{position:'relative'}}
           >
