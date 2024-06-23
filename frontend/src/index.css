@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    scroll-behavior: smooth;
+}
+
 .text-shadow-custom{
     text-shadow: 0px 0px 4px #74DBE2;
 }
@@ -29,4 +33,36 @@
     background-color: #74DBE2;
     bottom: 0px;
     left: 0;
+}
+
+.gradient-hover {
+    position: relative;
+    background-color: #272019;
+    color: #fff;
+    font-weight: bold;
+    border: linear-gradient(to right, #2cb8e8, #5a80f7);
+    cursor: pointer;
+    outline: none;
+    padding: 1rem 2rem;
+    transition: #272019 0.3s ease;
+}
+
+.gradient-hover::before {
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    z-index: -1;
+    background: linear-gradient(to right, #2cb8e8, #5a80f7);
+    border-radius:8px; 
+    transition: opacity 0.3s ease;
+}
+
+.gradient-hover:hover::before {
+    opacity: 1;
+}
+
+.gradient-hover:hover {
+    color: linear-gradient(to right, #2cb8e8, #5a80f7);
+    color: #fff;
 }

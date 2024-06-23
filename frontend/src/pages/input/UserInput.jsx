@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { getCompletion } from '../../helper/geminiAiService';
 import UrComponent from './UrComponent.jsx';
 
+
 const UserInput = () => {
 
     const [page, setPage] = useState(0);
@@ -202,7 +203,7 @@ const UserInput = () => {
                     {page === 2 && (
                         <div>
                             <h1 className="flex text-5xl font-bold mb-4 text-blue text-shadow-custom justify-center align-center">Let's get to know you!</h1>
-                            <h1 className="flex justify-center align-center text-3xl mb-4 text-blue">Experience and Payment</h1>
+                            <h1 className="flex justify-center align-center text-3xl mb-4 text-blue">Part C: Experience and Payment</h1>
                             <div className="mb-4">
                                 <label htmlFor="yearsOfExp" className="block text-white font-bold mb-4">Years of Experience:</label>
                                 <input
@@ -228,12 +229,12 @@ const UserInput = () => {
                         </div>
                     )}
                     {page < 2 && (
-                        <button onClick={handleNext} className="flex justify-center align-center w-[50%] bg-black text-white font-bold py-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button onClick={handleNext} className="gradient-hover py-5 rounded-md">
                             Next
                         </button>
                     )}
                     {page === 2 && (
-                        <button type="submit" className="flex justify-center align-center w-[50%] bg-black text-white font-bold py-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button type="submit" className="gradient-hover bg-black text-white font-bold py-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             Submit
                         </button>
                     )}

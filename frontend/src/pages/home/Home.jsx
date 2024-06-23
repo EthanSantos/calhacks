@@ -13,12 +13,20 @@ const Home = () => {
           Your go-to platform for <span className="italic">generating</span> and <span className="italic">interpreting</span> contracts.
         </p>
         <img src={'./src/pics/homeTri.png'} alt="Bottom" className="h-[65%] absolute bottom-0 right-0" />
-        <a href="#section2" className="font-satoshi text-lg text-gray-500 absolute bottom-6 cursor-pointer hover:text-yellow transition-all">
+        {/* <a href="#section2" className="font-satoshi text-lg absolute bottom-6 cursor-pointer hover:text-yellow transition-all">
+          Learn more
+        </a> */}
+
+        <a
+          href="#section2"
+          className="font-satoshi text-lg absolute bottom-6 cursor-pointer text-yellow opacity-50 hover:opacity-100 transition-opacity hover:text-yellow"
+          style={{ textDecoration: 'none' }}
+        >
           Learn more
         </a>
       </div>
 
-      <div id="section2" className="flex flex-col justify-center items-center bg-[#272019] p-10">
+      <div id="section2" className="flex flex-col justify-center items-center bg-[#272019] pt-20">
         <div id="section2b" className="flex flex-col justify-center items-center h-[600px] w-[80%] max-w-[1200px] bg-[#E7D9BE] rounded-xl">
           <p className="font-satoshi" style={{ color: '#272019', fontSize: '60px', fontWeight: 'bold'}}>
             <span className="red-underline">TRANSLATE</span> your Contracts
