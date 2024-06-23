@@ -2,55 +2,40 @@ import { useState } from 'react';
 import { getCompletion } from '../../helper/geminiAiService';
 import UrComponent from './UrComponent.jsx';
 
+import Contract from '../contract/Contract';
 
 const UserInput = () => {
-
     const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [content, setContent] = useState([]);
+    const [contractData, setContractData] = useState([]);
 
-    // personal
-    const [name, setName] = useState(''); // Rian Corcino
-    const [profession, setProfession] = useState(''); // Instagram influencer
-    const [services, setServices] = useState(''); // Instagram reels
+    const sections = [
+        "Introduction",
+        "Scope of Work",
+        "Payment Terms",
+        "Deliverables",
+        "Timeline",
+        "Intellectual Property",
+        "Termination"
+    ];
 
-    const [startDate, setStartDate] = useState(''); // 6/12
+    const [name, setName] = useState('');
+    const [profession, setProfession] = useState(''); 
+    const [services, setServices] = useState(''); 
+    const [startDate, setStartDate] = useState(''); 
     const [endDate, setEndDate] = useState('');
-    const [checkIns, setCheckIns] = useState('');
-
-    const [yearsOfExp, setYearsOfExp] = useState(0);
     const [payment, setPayment] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setPage(page + 1);
-
-        console.log('Name:', name);
-        console.log('Profession:', profession);
-        console.log('Services:', services);
-        console.log('Start Date:', startDate);
-        console.log('End Date:', endDate);
-        console.log('Check-Ins:', checkIns);
-        console.log('Years of Experience:', yearsOfExp);
-        console.log('Payment:', payment);
-        // we will send this to the chatgpt api here
-        // upload to database aswell
-        const sections = [
-            "Introduction",
-            "Scope of Work",
-            "Payment Terms",
-            "Deliverables",
-            "Timeline",
-            "Intellectual Property",
-            "Termination"
-        ];
-        sections.forEach(async (sections) => {
-            console.log(sections)
-            let completion
-            try {
-                completion = await getCompletion(`
-                    Generate the "${sections}" section of the contract. Return a string response. Use these parameters:
+    
+        const contractSections = [];
+    
+        try {
+            for (const section of sections) {
+                const completion = await getCompletion(`
+                    Generate the "${section}" section of the contract. Return a string response. Use these parameters:
                     Name: ${name}
                     Profession: ${profession}
                     Services: ${services}
@@ -59,47 +44,17 @@ const UserInput = () => {
                     Payment: ${payment}
                 `);
                 
-            } catch (error) {
-                console.error(`Error generating "${sections}" section:`, error);
-            } finally {
-                setContent(prevContent => [...prevContent, completion, ]);
-                setLoading(false)
+                contractSections.push(completion);
             }
-        });
-        // let completion
-
-        // try {
-        //     const c1 = await getCompletion(`
-        //         Create a contract for a user who is offering their services to a client. Return a string response. Use these parameters:
-        //         Name: ${name}
-        //         Profession: ${profession}
-        //         Services: ${services}
-        //         Start Date: ${startDate}
-        //         End Date: ${endDate}
-        //         Payment: ${payment}
-        //     `)
-        // }
-
-        // try {
-        //     // Replace the actual user input with mock data for testing purposes
-        //     completion = await getCompletion(`
-        //         Create a contract for a user who is offering their services to a client. Return a string response. Use these parameters:
-        //         Name: ${name}
-        //         Profession: ${profession}
-        //         Services: ${services}
-        //         Start Date: ${startDate}
-        //         End Date: ${endDate}
-        //         Payment: ${payment}
-        //         `); // specify token count here
-            
-        //     console.log(completion);
-        // } catch (error) {
-        //     console.error('Error fetching completion:', error);
-        // } finally {
-        //     setContent(completion);
-        //     setLoading(false);
-        // }
-    };
+    
+            setContractData(contractSections);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error generating contract sections:', error);
+            setContractData([]); // Clear contract data on error
+            setLoading(false);
+        }
+    };    
 
     const handleNext = (e) => {
         e.preventDefault();

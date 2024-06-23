@@ -16,3 +16,5 @@ export const getCompletion = async (prompt) => {
     const text = await response.text();
     return text
 };
+
+
