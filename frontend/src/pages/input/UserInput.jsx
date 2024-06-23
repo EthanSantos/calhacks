@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { getCompletion } from '../../helper/geminiAiService';
+import UrComponent from './UrComponent.jsx';
 
 const UserInput = () => {
 
     const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState([]);
 
     // personal
     const [name, setName] = useState(''); // Rian Corcino
@@ -34,16 +35,69 @@ const UserInput = () => {
         console.log('Payment:', payment);
         // we will send this to the chatgpt api here
         // upload to database aswell
+        const sections = [
+            "Introduction",
+            "Scope of Work",
+            "Payment Terms",
+            "Deliverables",
+            "Timeline",
+            "Intellectual Property",
+            "Termination"
+        ];
+        sections.forEach(async (sections) => {
+            console.log(sections)
+            let completion
+            try {
+                completion = await getCompletion(`
+                    Generate the "${sections}" section of the contract. Return a string response. Use these parameters:
+                    Name: ${name}
+                    Profession: ${profession}
+                    Services: ${services}
+                    Start Date: ${startDate}
+                    End Date: ${endDate}
+                    Payment: ${payment}
+                `);
+                
+            } catch (error) {
+                console.error(`Error generating "${sections}" section:`, error);
+            } finally {
+                setContent(prevContent => [...prevContent, completion, ]);
+                setLoading(false)
+            }
+        });
+        // let completion
 
-        try {
-            const completion = await getCompletion("Create a contract for a user who is offering their services to someone else. Use these parameters: "); // put prompt here
-            setContent(completion);
-            console.log(completion);
-        } catch (error) {
-            console.error('Error fetching completion:', error);
-        } finally {
-            setLoading(false);
-        }
+        // try {
+        //     const c1 = await getCompletion(`
+        //         Create a contract for a user who is offering their services to a client. Return a string response. Use these parameters:
+        //         Name: ${name}
+        //         Profession: ${profession}
+        //         Services: ${services}
+        //         Start Date: ${startDate}
+        //         End Date: ${endDate}
+        //         Payment: ${payment}
+        //     `)
+        // }
+
+        // try {
+        //     // Replace the actual user input with mock data for testing purposes
+        //     completion = await getCompletion(`
+        //         Create a contract for a user who is offering their services to a client. Return a string response. Use these parameters:
+        //         Name: ${name}
+        //         Profession: ${profession}
+        //         Services: ${services}
+        //         Start Date: ${startDate}
+        //         End Date: ${endDate}
+        //         Payment: ${payment}
+        //         `); // specify token count here
+            
+        //     console.log(completion);
+        // } catch (error) {
+        //     console.error('Error fetching completion:', error);
+        // } finally {
+        //     setContent(completion);
+        //     setLoading(false);
+        // }
     };
 
     const handleNext = (e) => {
@@ -52,125 +106,140 @@ const UserInput = () => {
     };
 
     return (
-        <div className='max-w-lg mx-auto mt-[200px] p-6 bg-white shadow-md rounded-md'>
-            <form onSubmit={page === 2 ? handleSubmit : handleNext}>
-            {loading && <p>Loading...</p>}
-            {!loading && content && <div>{content}</div>}
-
-                {page === 0 && (
-                    <div>
-                        <h1 className="text-2xl font-bold mb-4">Personal</h1>
-                        <div className="mb-4">
-                            <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Name:</label>
-                            <input
-                                type="text"
-                                id="name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="profession" className="block text-gray-700 font-bold mb-2">Profession:</label>
-                            <input
-                                type="text"
-                                id="profession"
-                                value={profession}
-                                onChange={(e) => setProfession(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="services" className="block text-gray-700 font-bold mb-2">Services:</label>
-                            <textarea
-                                id="services"
-                                value={services}
-                                onChange={(e) => setServices(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
+        <div className="flex flex-row justify-center items-center h-screen">
+            <UrComponent />
+            <div className="relative flex justify-left items-center">
+                <img src={'./src/pics/anim1.png'} alt="Anim1" className="h-[650px] w-auto ml-[150px]"/>
+                <img src={'./src/pics/anim2.png'} alt="Anim2" className="h-[450px] w-auto"/>
+            </div>
+            <div className='flex justify-center align-center h-full w-full ml-[250px] p-[150px] bg-gray rounded-[30px]'>
+                <form onSubmit={page === 2 ? handleSubmit : handleNext} className='flex flex-col justify-center align-center max-w-auto'>
+                {loading && <p>Loading...</p>}
+                {!loading && content && 
+                
+                Array.isArray(content) && content.map((para, index) => (
+                    <div key={index} >
+                        <p key={index}>{para}</p><br/>
                     </div>
-                )}
-                {page === 1 && (
-                    <div>
-                        <h1 className="text-2xl font-bold mb-4">Timeline</h1>
-                        <div className="mb-4">
-                            <label htmlFor="startDate" className="block text-gray-700 font-bold mb-2">Start Date:</label>
-                            <input
-                                type="date"
-                                id="startDate"
-                                value={startDate}
-                                onChange={(e) => setStartDate(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                ))}
+                    {page === 0 && (
+                        <div>
+                            <h1 className="flex text-5xl font-bold mb-4 text-blue text-shadow-custom justify-center align-center">Let's get to know you!</h1>
+                            <h1 className="flex justify-center align-center text-3xl mb-4 text-blue">Part A: Bio</h1>
+                            <div className="mb-4">
+                                <label htmlFor="name" className="block text-white font-bold mb-2">Name:</label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                    className="w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="profession" className="block text-white font-bold mb-2">Profession:</label>
+                                <input
+                                    type="text"
+                                    id="profession"
+                                    value={profession}
+                                    onChange={(e) => setProfession(e.target.value)}
+                                    required
+                                    className="w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="services" className="block text-white font-bold mb-2">Services:</label>
+                                <textarea
+                                    id="services"
+                                    value={services}
+                                    onChange={(e) => setServices(e.target.value)}
+                                    required
+                                    className="w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
                         </div>
-                        <div className="mb-4">
-                            <label htmlFor="endDate" className="block text-gray-700 font-bold mb-2">End Date:</label>
-                            <input
-                                type="date"
-                                id="endDate"
-                                value={endDate}
-                                onChange={(e) => setEndDate(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                    )}
+                    {page === 1 && (
+                        <div>
+                            <h1 className="flex text-5xl font-bold mb-4 text-blue text-shadow-custom justify-center align-center">Let's get to know you!</h1>
+                            <h1 className="flex justify-center align-center text-3xl mb-4 text-blue">Part B: Timeline</h1>
+                            <div className="mb-4">
+                                <label htmlFor="startDate" className="block text-white font-bold mb-4">Start Date:</label>
+                                <input
+                                    type="date"
+                                    id="startDate"
+                                    value={startDate}
+                                    onChange={(e) => setStartDate(e.target.value)}
+                                    required
+                                    className="w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="endDate" className="block text-white font-bold mb-4">End Date:</label>
+                                <input
+                                    type="date"
+                                    id="endDate"
+                                    value={endDate}
+                                    onChange={(e) => setEndDate(e.target.value)}
+                                    required
+                                    className="w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="checkIns" className="block text-white font-bold mb-4">Check-Ins:</label>
+                                <input
+                                    type="text"
+                                    id="checkIns"
+                                    value={checkIns}
+                                    onChange={(e) => setCheckIns(e.target.value)}
+                                    required
+                                    className="w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
                         </div>
-                        <div className="mb-4">
-                            <label htmlFor="checkIns" className="block text-gray-700 font-bold mb-2">Check-Ins:</label>
-                            <input
-                                type="text"
-                                id="checkIns"
-                                value={checkIns}
-                                onChange={(e) => setCheckIns(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                    )}
+                    {page === 2 && (
+                        <div>
+                            <h1 className="flex text-5xl font-bold mb-4 text-blue text-shadow-custom justify-center align-center">Let's get to know you!</h1>
+                            <h1 className="flex justify-center align-center text-3xl mb-4 text-blue">Experience and Payment</h1>
+                            <div className="mb-4">
+                                <label htmlFor="yearsOfExp" className="block text-white font-bold mb-4">Years of Experience:</label>
+                                <input
+                                    type="number"
+                                    id="yearsOfExp"
+                                    value={yearsOfExp}
+                                    onChange={(e) => setYearsOfExp(e.target.value)}
+                                    required
+                                    className="w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="payment" className="block text-white font-bold mb-4">Payment:</label>
+                                <input
+                                    type="text"
+                                    id="payment"
+                                    value={payment}
+                                    onChange={(e) => setPayment(e.target.value)}
+                                    required
+                                    className="w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
                         </div>
-                    </div>
-                )}
-                {page === 2 && (
-                    <div>
-                        <h1 className="text-2xl font-bold mb-4">Experience and Payment</h1>
-                        <div className="mb-4">
-                            <label htmlFor="yearsOfExp" className="block text-gray-700 font-bold mb-2">Years of Experience:</label>
-                            <input
-                                type="number"
-                                id="yearsOfExp"
-                                value={yearsOfExp}
-                                onChange={(e) => setYearsOfExp(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="payment" className="block text-gray-700 font-bold mb-2">Payment:</label>
-                            <input
-                                type="text"
-                                id="payment"
-                                value={payment}
-                                onChange={(e) => setPayment(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
-                    </div>
-                )}
-                {page < 2 && (
-                    <button onClick={handleNext} className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        Next
-                    </button>
-                )}
-                {page === 2 && (
-                    <button type="submit" className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        Submit
-                    </button>
-                )}
-            </form>
-            
+                    )}
+                    {page < 2 && (
+                        <button onClick={handleNext} className="flex justify-center align-center w-[50%] bg-black text-white font-bold py-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Next
+                        </button>
+                    )}
+                    {page === 2 && (
+                        <button type="submit" className="flex justify-center align-center w-[50%] bg-black text-white font-bold py-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Submit
+                        </button>
+                    )}
+                </form>
+                
+            </div>
         </div>
     );
 };

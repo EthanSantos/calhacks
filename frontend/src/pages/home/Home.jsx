@@ -1,10 +1,12 @@
 import React from 'react';
 import MyComponent from './MyComponent.jsx'; // Adjust the path if MyComponent is in a different directory
+import Navbar from '../../navbar/Navbar.jsx';
 
 const Home = () => {
   return (
     <div className="flex flex-col justify-center items-center h-screen">
       <MyComponent />
+      <Navbar />
       <img src={'./src/pics/logo.png'} alt="Logo" className="h-64 mb-[-15px]"/>
       <p className="font-satoshi text-[25px] text-center text-yellow">
         Your go-to platform for <span class="italic">generating</span> and <span class="italic">interpreting</span> contracts.

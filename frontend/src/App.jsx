@@ -8,7 +8,7 @@ import Navbar from './navbar/Navbar';
 function App() {
   return (
     <Router>
-      <Navbar />
+      {/* <Navbar /> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/user-input" element={<UserInput />} />
